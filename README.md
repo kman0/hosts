@@ -1,4 +1,4 @@
 hosts
 =====
 
-Manage hosts file
+Python wrapper to manage hosts file
