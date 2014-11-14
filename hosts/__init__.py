@@ -46,8 +46,23 @@ def ensure_entry(hostname, address):
     """
 
 
-def is_hosts_writable(file_path=get_hosts_path()):
-    """ Function to determine whether user has write permissions to the hosts file """
-    if os.access(file_path, os.W_OK):
-        return True
+
+class Hosts(object):
+    """
+
+    """
+
+    def __init__(self, *, hosts_path=None):
+        """
+        :param hosts_path: Location of hosts file
+        """
+        if not hosts_path:
+            self.hosts_path = get_hosts_path()
+        if not os.path.isfile(hosts_path):
+            raise IOError()
+
+    def is_hosts_writable(self):
+        """ Function to determine whether user has write permissions to the hosts file """
+        if os.access(self.hosts_path, os.W_OK):
+            return True
 
