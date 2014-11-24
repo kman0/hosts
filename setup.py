@@ -34,7 +34,7 @@ setup(
     author='manojklm',
     author_email='',
     description='Python wrapper to manage hosts file',
-    keywords='hosts hostsfile hostfile pyhosts',
+    keywords='hosts hostsfile hostfile pyhosts host ',
     tests_require=['pytest'],
     cmdclass={'test': PyTest},
 )
