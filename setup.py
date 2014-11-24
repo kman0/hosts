@@ -4,9 +4,6 @@ import sys
 from distutils.core import setup
 from setuptools.command.test import test
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md')) as f:
-    long_description = f.read()
-
 
 class PyTest(test):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
@@ -30,7 +27,8 @@ class PyTest(test):
 setup(
     name='hosts',
     version='0.1',
-    packages=[''],
+    packages=['hosts'],
+    package_dir={'hosts': 'hosts'},
     url='https://github.com/manojklm/hosts',
     license='The MIT License (MIT)',
     author='manojklm',

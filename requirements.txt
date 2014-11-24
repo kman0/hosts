@@ -1,2 +1,2 @@
 netaddr>=0.7.12
-pytest>=2.0.0
+pytest>=2.6.4
