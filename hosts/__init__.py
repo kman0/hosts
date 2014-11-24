@@ -1,10 +1,18 @@
+from collections import defaultdict
+
 __author__ = 'M'
 import os
 import platform
 
 
 def get_hosts_path():
-    """ Function to get hosts file path """
+    """
+    Function to get hosts file path
+    :return: str, points to hosts file.
+
+    :raises: Exception('Unsupported Platform')
+
+    """
     if platform.system() == "Linux":
         return "/etc/hosts"
     elif platform.system() == "Windows":
@@ -44,7 +52,7 @@ def ensure_entry(hostname, address):
     :param address:
     :return:
     """
-
+    pass
 
 
 class Hosts(object):
@@ -56,13 +64,41 @@ class Hosts(object):
         """
         :param hosts_path: Location of hosts file
         """
+        self._ips = defaultdict()
         if not hosts_path:
             self.hosts_path = get_hosts_path()
-        if not os.path.isfile(hosts_path):
-            raise IOError()
+        else:
+            self.hosts_path = hosts_path
+        self._reload()
 
-    def is_hosts_writable(self):
-        """ Function to determine whether user has write permissions to the hosts file """
-        if os.access(self.hosts_path, os.W_OK):
-            return True
+    def _reload(self):
+        """
+        Reloads the hosts file from disk. Un saved changes are lost!
+        :return:
+        """
+        if not os.path.isfile(self.hosts_path):
+            raise IOError('File not found: %s' % self.hosts_path)
+
+        # load hosts file with comments and strip
+        self._raw_lines = [line.strip() for line in open(self.hosts_path).readlines()]
+
+        # weed out comments
+        self._lines = {sno:line for sno, line in enumerate(self._raw_lines) if not line.startswith('#') and line != ''}
+
+    def _new_lines_with_comments(self):
+        """
+        Multiplex comment lines with processed lines
+        :return:
+        """
+        #todo: code this part! :D
+        return [self._lines[sno] for sno in self._lines]
+
+    def save(self):
+        """ Writes the changes to the hosts file"""
+        if not os.access(self.hosts_path, os.W_OK):
+            raise IOError('Unable to write to file: %s' % self.hosts_path)
+        contents = '\n'.join(self._new_lines_with_comments())
+        with open(self.hosts_path, 'w') as fpw:
+            fpw.writelines(contents + '\n')
+
 
