@@ -14,7 +14,7 @@ hosts_file_1 = """
 
 """
 
-hosts_file_path = 'k:/hosts'
+hosts_file_path = 'tmp_hosts'
 with open(hosts_file_path, 'w') as fpw:
    fpw.write(hosts_file_1)
 
