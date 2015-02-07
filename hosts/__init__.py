@@ -60,7 +60,7 @@ class Hosts(object):
 
     """
 
-    def __init__(self, *, hosts_path=None):
+    def __init__(self, hosts_path=None):
         """
         :param hosts_path: Location of hosts file
         """
@@ -83,7 +83,7 @@ class Hosts(object):
         self._raw_lines = [line.strip() for line in open(self.hosts_path).readlines()]
 
         # weed out comments
-        self._lines = {sno:line for sno, line in enumerate(self._raw_lines) if not line.startswith('#') and line != ''}
+        self._lines = {sno: line for sno, line in enumerate(self._raw_lines) if not line.startswith('#') and line != ''}
 
     def _new_lines_with_comments(self):
         """
